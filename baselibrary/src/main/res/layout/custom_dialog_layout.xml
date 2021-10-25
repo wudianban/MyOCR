@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_dialog_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/messageText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:gravity="center_horizontal"
+        android:textColor="#000000"
+        android:textSize="@dimen/sp_18"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/permissionsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" />
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_10">
+        <!--android:background="@drawable/shape_button_5"-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/negativeBtn"
+            style="@style/dialogBut"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:text="拒绝"
+            android:textColor="#333333"
+            app:backgroundTint="#F3F3F3"
+            app:cornerRadius="@dimen/dp_22" />
+
+        <!--android:background="@drawable/shape_button_5_main"-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/positiveBtn"
+            style="@style/dialogBut"
+            android:text="开启"
+            android:textColor="#fff"
+            app:backgroundTint="@color/colorMain_1"
+            app:cornerRadius="@dimen/dp_22" />
+
+    </LinearLayout>
+
+    <!--  <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginLeft="20dp"
+          android:layout_marginRight="20dp"
+          android:layout_marginBottom="10dp">
+
+          <Button
+              android:id="@+id/negativeBtn"
+              android:layout_width="@dimen/dp_120"
+              android:layout_height="@dimen/dp_46"
+              android:background="@drawable/negative_button_bg"
+              android:text="拒绝"
+              android:textColor="#fff"
+              android:textSize="@dimen/sp_14" />
+
+          <Button
+              android:id="@+id/positiveBtn"
+              android:layout_width="@dimen/dp_120"
+              android:layout_height="@dimen/dp_46"
+              android:layout_marginStart="30dp"
+              android:layout_marginLeft="30dp"
+              android:background="@drawable/positive_button_bg"
+              android:text="开启"
+              android:textColor="#fff"
+              android:textSize="@dimen/sp_14" />
+
+      </LinearLayout>-->
+
+</LinearLayout>

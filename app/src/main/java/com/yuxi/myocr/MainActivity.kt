@@ -7,14 +7,13 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.cdsmartcity.baselibrary.baseView.GlideEngine
+import com.cdsmartcity.baselibrary.baseView.LoadingDialog
 import com.cdsmartcity.baselibrary.utilTooth.LogUtils
 import com.cdsmartcity.baselibrary.utilTooth.PermissionsUtils
-import com.cdsmartcity.baselibrary.utilTooth.SharePreferenceUtils.FILE_NAME
 import com.cdsmartcity.baselibrary.utilTooth.ToastUtil
 import com.googlecode.tesseract.android.TessBaseAPI
 import com.luck.picture.lib.PictureSelector
@@ -71,13 +70,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (Build.VERSION.SDK_INT < 23) {
             languageIsExists()
         }
+        initDialog()
         getPermissions()
         but_img.setOnClickListener {
             setPictureSelector()
@@ -152,12 +151,13 @@ class MainActivity : AppCompatActivity() {
             return
         }
         baseApi.init(path, LANGUAGE_FILE_NAME)
-        ToastUtil.showMessage(this, "文字识别中...")
+        showLoading("文字识别中...");
         Thread(Runnable {
             baseApi.setImage(bitmap)
             val text = baseApi.utF8Text
             runOnUiThread {
                 et_show?.setText(text)
+                cancelLoading()
             }
         }).start()
 
@@ -194,6 +194,50 @@ class MainActivity : AppCompatActivity() {
         private const val LANGUAGE_NAME = "chi_sim.traineddata"
         private const val LANGUAGE_FILE_NAME = "chi_sim"
         private const val PERMISSION_REQUEST_CODE = 0
+    }
+
+    private var mLoadingDialog: LoadingDialog.Builder? = null
+    private var dialog: LoadingDialog? = null
+    private fun initDialog() {
+        mLoadingDialog = LoadingDialog.Builder(this)
+            .setMessage("loading...")
+            .setCancelable(false)
+    }
+
+    /**
+     * 显示进度
+     */
+    @Synchronized
+    protected fun showLoading() {
+        if (dialog == null) {
+            dialog = mLoadingDialog!!.create()
+        }
+        dialog!!.show()
+        dialog!!.setCancelable(false)
+    }
+
+    /**
+     * 显示进度
+     */
+    @Synchronized
+    protected fun showLoading(text: String) {
+        if (dialog == null) {
+            dialog = mLoadingDialog!!.create()
+        }
+        mLoadingDialog!!.setMessage(text)
+        dialog!!.show()
+        dialog!!.setCancelable(false)
+    }
+
+    /**
+     * 取消进度
+     */
+    @Synchronized
+    protected fun cancelLoading() {
+        if (dialog != null) {
+            dialog!!.dismiss()
+            dialog = null
+        }
     }
 
 }
